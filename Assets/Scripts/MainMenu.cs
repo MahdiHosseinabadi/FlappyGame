@@ -1,52 +1,100 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
-    public static int CurrentScore;
-    public int HighScore;
-    public Text TextHighScore;
-    public Text TextScore;
+    public static MainMenu instance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public GameObject settingsPanel;
+
+    public bool SFXEnabled;
+    public bool musicEnabled;
+
+    void Awake()
     {
-        CurrentScore = 0;
-        TextScore.text = CurrentScore.ToString();
-        HighScore = PlayerPrefs.GetInt("HighScore", 0);
-        TextHighScore.text = HighScore.ToString();
+        instance = this;
     }
 
-    // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if (CurrentScore > HighScore)
-        {
-            HighScore = CurrentScore;
-            PlayerPrefs.SetInt("HighScore", HighScore);
-            PlayerPrefs.Save();
-        }
+        SFXEnabled = true;
+        musicEnabled = true;
 
-        TextScore.text = CurrentScore.ToString();
-        TextHighScore.text = HighScore.ToString();
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
     }
 
     public void PlayGame()
     {
+        if (ScoreManager.instance != null)
+        {
+            ScoreManager.instance.ResetScore();
+        }
+
         SceneManager.LoadScene(1);
     }
 
     public void ResetScore()
     {
-        PlayerPrefs.SetInt("HighScore", 0);
-        PlayerPrefs.Save();
-        HighScore = 0;
-        TextHighScore.text = HighScore.ToString();
+        if (ScoreManager.instance != null)
+        {
+            ScoreManager.instance.ResetScore();
+        }
+    }
+
+    public void ResetHighScore()
+    {
+        if (ScoreManager.instance != null)
+        {
+            ScoreManager.instance.ResetHighScore();
+        }
     }
 
     public void BackToMainMenu()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void OpenSettings()
+    {
+        settingsPanel.SetActive(true);
+    }
+
+    public void CloseSetting()
+    {
+        settingsPanel.SetActive(false);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    public void ToggleMusic()
+    {
+        musicEnabled = !musicEnabled;
+
+        if (AudioManager.instance == null) return;
+
+        if (musicEnabled)
+        {
+            AudioManager.instance.UnPauseMusic();
+        }
+        else
+        {
+            AudioManager.instance.PauseMusic();
+        }
+    }
+
+    public void ToggleSFX()
+    {
+        SFXEnabled = !SFXEnabled;
+
+        if (AudioManager.instance == null) return;
+
+        if (!SFXEnabled)
+        {
+            AudioManager.instance.sfxSource.Stop();
+        }
     }
 }

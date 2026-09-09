@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    public Rigidbody2D rigidbody;
     public float JumpH;
 
     public Animator Flapping;
@@ -12,24 +12,24 @@ public class Player : MonoBehaviour
 
     public GameObject GameOverScene;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Time.timeScale = 1;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !GameOver)
         {
-            rb.AddForce(Vector2.up * JumpH, ForceMode2D.Impulse);
+            rigidbody.AddForce(Vector2.up * JumpH, ForceMode2D.Impulse);
             Flapping.Play("PlayerFlap");
+            AudioManager.instance.Play(SoundType.PlayerJump);
         }
 
         if (GameOver)
         {
             GameOverScene.SetActive(true);
+            AudioManager.instance.Play(SoundType.GameOver);
             Time.timeScale = 0;
         }
     }
@@ -38,8 +38,9 @@ public class Player : MonoBehaviour
     {
         if (!GameOver)
         {
-            rb.AddForce(Vector2.up * JumpH, ForceMode2D.Impulse);
+            rigidbody.AddForce(Vector2.up * JumpH, ForceMode2D.Impulse);
             Flapping.Play("PlayerFlap");
+            AudioManager.instance.Play(SoundType.PlayerJump);
         }
     }
 
