@@ -3,12 +3,11 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public static MainMenu instance;
-
     public GameObject settingsPanel;
-
     public bool SFXEnabled;
     public bool musicEnabled;
+
+    public static MainMenu instance;
 
     void Awake()
     {

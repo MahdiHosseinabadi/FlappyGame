@@ -1653,8 +1653,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ba874cb7b1c94b48943636e18421020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResponsiveCamera
-  referenceAspect: 0.5625
-  referenceOrthographicSize: 5
 --- !u!1 &538049738
 GameObject:
   m_ObjectHideFlags: 0
@@ -4799,5 +4797,5 @@ SceneRoots:
   m_Roots:
   - {fileID: 519420032}
   - {fileID: 1533617071}
-  - {fileID: 1458456977}
   - {fileID: 1427967025}
+  - {fileID: 1458456977}

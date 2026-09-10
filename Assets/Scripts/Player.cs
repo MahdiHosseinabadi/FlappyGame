@@ -1,6 +1,5 @@
 using UnityEngine;
 
-
 public class Player : MonoBehaviour
 {
     public Rigidbody2D rigidbody;
